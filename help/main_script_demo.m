@@ -15,6 +15,7 @@
 %%
 clear all;
 clc
+cd ..
 
 addpath(genpath('sim'))
 addpath(genpath('lib'))
