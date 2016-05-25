@@ -21,7 +21,7 @@ To build up the `.mex` files from `<filename>.c`, run `mex -v <filename>.c` in M
 
 ### `Simlake` test case and `sys_param` 
 
-The M3O toolbox comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run `main_test.m` in MATLAB. A global structure variable `sys_param` is shared by the inner functions of the toolbox via the `global` command. Under the `sys_param` there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and `.algorithm` which holds the specific algorithmic settings for each algorithm. For more details see the HELP FILE.
+The M3O toolbox comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run `main_test.m` in MATLAB. A global structure variable `sys_param` is shared by the inner functions of the toolbox via the `global` command. Under the `sys_param` there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and `.algorithm` which holds the specific algorithmic settings for each algorithm. For more details see the [HELP FILE] (https://dl.dropboxusercontent.com/u/5877020/myWebsite/M3O_help/main_script_demo.html).
 
 
 
