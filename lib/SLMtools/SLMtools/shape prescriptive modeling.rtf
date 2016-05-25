@@ -1,0 +1,337 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww11400\viewh19420\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\f0\fs24 \cf0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b \cf0 What is shape prescriptive curve fitting?
+\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 A proper discussion of shape prescriptive curve fitting must begin with what it is not. To do that, I must first discuss curve fitting in general. Why do we, as scientists and engineers, fit a curve to data? There are really two basic reasons why, if we ignore the common "My boss told me to do this." (I'll limit this entire document to discussions of fitting a single dependent variable as a function of a single independent variable.)\
+The first such reason is for predictive value. We may wish to reduce some set of data to a simply accessible functional relationship for future use. We may also wish to be able to predict/estimate some parameter of the relationship, such as a minimum or maximum value, or perhaps a maximum slope or a rate parameter. The second reason for model building is for understanding. Here we have some data that we wish to interrogate to learn something about an underlying process. Admittedly, this case applies more to problems with many variables. For simple one variable problems, we can learn much of what we need to know with a single plot. I'll focus the remainder of this discussion on the predictive case.\
+If we are to fit a model to data, what kind of models do we use, and how does the model class reflect our goals in the modeling process?\
+To answer this question, I'll first look at the common modeling tools we might see. First and most primeval is polyfit. Polyfit allows us to fit a polynomial model to our data. Such a model tells us little about our process beyond perhaps a simple slope. These models are really of value only for very simple relationships, where we are willing to invest little in the modeling process. Many of the individuals who use polynomial modeling tools do so for the wrong reasons. They use higher order fits to get a better approximation to their data, not realizing the problems inherent with those higher order polynomials.\
+At the other end of the spectrum, one sees individuals using nonlinear regression to fit a large variety of curves to data. Exponential terms, gaussian-like modes, sigmoid shapes, as well as may more. Did these model forms result from valid mechanistic arguments? Sometimes it is so, but far more often one uses these basic shapes because the individual knows something about the basic underlying process, and the model chosen has the correct basic shape. I'll argue that truly valid mechanistic models are nearly as rare as hen's teeth. \
+There is a subtle variation on the mechanistic model. I call it the metaphoric model. Here we use a mathematical model of one process that we do understand, used as a model for a process that we do not really understand. My favorite examples of such metaphorical models are cubic splines, where a mathematical model of a thin flexible beam is used to predict many other processes, and epidemiological models as used to predict sales of some product. There are many other examples of course. An advantage of a metaphorical model is it may help us to understand/predict/even extrapolate future behavior based on our knowledge of the metaphor.\
+Many of the nonlinear regression models that we see built in Matlab are of the shape variety. I.e., we see a bell shaped curve, so we fit a gaussian to it. We see a function with a lower and upper constant asymptote, and we fit some variety of logistic function, or an erf variant to it. If the fit is inadequate for our purposes, we try another functional form. \
+I'll argue that this group of individuals is using nonlinear regression for the wrong reason. They simply want some curve that behaves the way they know it should. Examples of this might be a photographic film modelor, who knows the film darkens as more photons land upon it, or a biologist, who knows that the count of bacteria in a petri dish will grow with time. (All of these examples have limits, but a good scientist/engineer will know those limits.) The fact is, we often understand something about a process we are trying to model. What we may not have is the ability to build that knowledge and understanding into our model. Even if we know the underlying functional relationship is monotone increasing/decreasing, how do we estimate a model that has that behavior built into it?\
+This is where shape prescriptive modeling shines. It is really a very Bayesian concept. It is the process of quantifying our basic knowledge of a process in mathematical terms, and then estimating a predictive model of the process that has that knowledge built into it. Our knowledge becomes a prescription for the final shape of the process. Sometimes we know much about a process, in which case we have a detailed prescription. Other times we have a very sketchy prescription.\
+How do I do shape prescriptive modeling? I use splines - specifically least squares splines, subject to simple constraints. Common classes of constraints are based on monotonicity or curvature, also value constraints, where the user knows some maximum or minimum value the curve cannot exceed, or a fixed point the curve must pass through.\
+How often is shape prescriptive curve fitting of value? In my years of experience as a consulting mathematician at the Eastman Kodak Company, I found that the incidence of simple nonlinear regression modeling dropped dramatically once I introduced these concepts. Admittedly, the use of least squares splines in industrial applications predates the tools I introduced at Kodak, yet least squares splines did not come into heavy use there until my tools became available. The reason is simple. Least squares splines suffer from one major problem - that of knot placement. One sometimes needs to place the knots properly in a least squares spline to achieve the best results, yet use of too many knots can result in over-fitting and even matrix singularities. This single flaw held off the use of such tools for many years.\
+The resolution of the knot placement problem is simple enough. \
+\
+- Use of a gui allows the user to freely adjust, add, delete and move knots around.\
+\
+- Use significantly more knots than minimally necessary. \
+\
+As stated above, the use of too many knots can cause problems itself, yet I find this is rarely a real problem. I will provide two strong regularizing facilities in these tools. First is the use of an actual regularizer on the system. Thus I always add in a small penalty on the integrated square of the second derivative of the spline. This penalty term is small enough that in well behaved cases with well placed knots, it has no impact at all on the resulting spline. However when the knots are placed so the linear algebra would see numerical problems, the regularizer kicks in where no other information is available. When absolutely necessary, the user has the option of increasing the curvature penalty, or to use a cross validation scheme to choose that parameter for you. Most of the time nothing is required.\
+The second regularizing influence is the presence of constraints. When one appends their knowledge of the shape of the underlying functional form, all fits improve. For example, the simple presence of a monotonicity constraint is a tremendous influence on the shape of a curve.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b \cf0 Overview of shape prescriptive spline tools\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 My proposed shape prescriptive tools form a very limited set of functions. The most important is a gui tool, that allows the user to fit a curve using a simple point and click interface. The user must be able to select any of a large variety of constraint forms using a simple mouse click. Undo, redo, move knots around at will, all are important, as well as interact with the data, selecting points to down-weight as necessary. \
+As crucial as a gui interface is the ability to use a command line tool. Here one may know exactly what properties are desired, and wish to directly get a result with only a programmatic interaction. Of course the gui interface does no computation itself, it merely calls the command driven tool repetitively, until the user is satisfied with the resulting curve fit. This separation of tasks makes the coding easier too, since one can perfect the computational engine before needing to worry about the user interface.\
+Because of the large number of possible combinations of constraints one must allow, the command line interface must be a property/value pair interface. I like the handle graphics model that matlab has implemented, and also uses in the optimization toolbox.\
+Finally, one must also be able to evaluate the resulting spline in a predictive manner. I've also provided a tool to allow you to plot a spline or its derivatives.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b \cf0 Details of the tools - argument sequences
+\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 My proposed spline tools are driven by property/value pairs, much as is the optimization toolbox. This reflects the large number of possible constraints one may wish to impose on a spline. The basic tool for working with these pairs is slmset. (I've admittedly chosen names which are perhaps less than innovative here. "slm" refers to Shape Language Model.) There are three basic calls to slmset, all of which return a prescription structure for the spline.\
+\
+prescription = slmset;\
+\
+prescription = slmset(prop1, val1, prop2, val2, ...);\
+\
+prescription = slmset(prescription, prop1, val1, prop2, val2, ...);\
+\
+The first case, with no input arguments, yields a structure which sets all properties at their defaults. The second case will set all properties at their defaults, then replace any the user has set in the argument list. The third case will reset any properties in the provided structure, rather than work from the default list of properties.\
+\
+The default prescription structure is:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\ql\qnatural
+\cf0 prescription = \
+\
+	C2:			'on'\
+	ConcaveDown:	'off'\
+	ConcaveUp:		'off'\
+	ConstantRegion:	[]\
+	Decreasing:		'off'\
+	Degree: 		3\
+	EndConditions: 	'estimate'\
+	Envelope:		'off'\
+	ErrorBar:		[]\
+	Increasing:		'off'\
+	Integral:		[]\
+	InteriorKnots:	'fixed'\
+	Knots:			6\
+	LeftMaxSlope:	[]\
+	LeftMaxValue:	[]\
+	LeftMinSlope:	[]\
+	LeftMinValue:	[]\
+	LeftSlope:		[]\
+	LeftValue:		[]\
+	LinearRegion:	[]\
+	MaxSlope:		[]\
+	MaxValue:		[]\
+	MinSlope:		[]\
+	MinValue:		[]\
+	NegativeInflection:	[]\
+	Order:			[]\
+	Plot:			'off'\
+	PositiveInflection:	[]\
+	PredictionUncertainty: 'off'\
+	Regularization:	0.0001\
+	Result:		'slm'\
+	RightMaxSlope:	[]\
+	RightMaxValue:	[]\
+	RightMinSlope:	[]\
+	RightMinValue:	[]\
+	RightSlope:		[]\
+	RightValue:		[]\
+	Scaling:		'on'\
+	SimplePeak:		[]\
+	SimpleValley:	[]\
+	Verbosity:		0\
+	Weights:		[]\
+	XY:			[]\
+	XYP:			[]\
+	XYPP:			[]\
+	XYPPP:		[]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 \
+\
+The function which actually fits a model from data is slmengine. This is the computational engine. It too has several optional calling sequences:\
+\
+model = slmengine(x, y);\
+model = slmengine(x, y, prescription);\
+model = slmengine(x, y, prop1, val1, prop2, val2, ...);\
+model = slmengine(x, y, prescription, prop1, val1, prop2, val2, ...);\
+[model, prescription] = slmengine(x, y, prescription, prop1, val1, prop2, val2, ...);\
+\
+All cases return the fitted spline model. The first uses the default parameters defined by slmset with no arguments. When a second output argument is requested, it will contain the prescription used for this curve fit.\
+The gui tool has a similar set of calling sequences. \
+\
+model = slmfit(x, y);\
+model = slmfit(x, y, prescription);\
+model = slmfit(x, y, prop1, val1, prop2, val2, ...);\
+model = slmfit(x, y, prescription, prop1, val1, prop2, val2, ...);\
+[model, prescription] = slmfit(x, y, prescription, prop1, val1, prop2, val2, ...);\
+\
+Most users would use the first sequence, choosing all constraints with the gui interface. Those users who wish to supply alternative constraint parameters to the gui can do so with any of the other forms. Finally, a user with multiple sets of data may wish to use the gui tool to define a prescription structure, then use that prescription as a template for the rest of the curves with slmengine, or as a template in slmfit.\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b \cf0 Details of the tools - Property/Value pairs
+\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 Properties are character strings, chosen to be mnemonic of their purpose. Any property name may be shortened, as long as the shortened string is unambiguous. Thus since no other property starts with the letter k, any of these alternatives are acceptable shortenings for the 'knots' property:  'knot', 'kno', 'kn' or 'k'.\
+In the event that a given property is assigned more than once in the list of property/value pairs, only the last value in the list is assigned. The following list of properties and descriptions of their associated values is not an exhaustive one.\
+\
+\pard\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li2160\fi-2160\ri-720\qj
+\cf0 Property name	Admissable values \
+\
+'knots'	\'95 A scalar integer which denotes the number of equally spaced knots.\
+	\'95 A vector containing the list of knots themselves.\
+\
+	When the knots are fixed, this parameter will define their values. When the (interior) knots are to be estimated, this will define their initial values for the resulting optimization.\
+\
+	DEFAULT VALUE:  6\
+\
+'increasing'	\'95 'off'  --> No part of the spline is constrained to be an increasing function.\
+	\'95 'on' --> the function will be increasing over its entire domain.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which it is monotone increasing.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which it is monotone increasing.\
+\
+	DEFAULT VALUE:  'off'\
+\
+	Comments: in actuality this property should be named 'non-decreasing', since a constant function is admissible. In addition, it is a sufficient constraint for monotonicity. It is not a necessary constraint. There may exist another spline which has a slightly lower sum of squares and is also monotone.\
+\
+'decreasing'	\'95 'off'  --> No part of the spline is constrained to be an decreasing function.\
+	\'95 'on' --> the function will be decreasing over its entire domain.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which it is monotone decreasing.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which it is monotone decreasing.\
+\
+	DEFAULT VALUE:  'off'\
+\
+	Comments: in actuality this property should be named 'non-increasing', since a constant function is admissible. In addition, it is a sufficient constraint for monotonicity. It is not a necessary constraint. There may exist another spline which has a slightly lower sum of squares and is also monotone.\
+\
+'concaveup'	\'95 'off'  --> No part of the spline is constrained to be a concave up function (i.e., a positive second derivative.)\
+	\'95 'on' --> f''(x) >= 0 over the entire domain of the spline.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which the second derivative is positive.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which the second derivative is positive.\
+\
+	DEFAULT VALUE:  'off'\
+\
+'concavedown'	\'95 'off'  --> No part of the spline is constrained to be a concave down function (i.e., a negative second derivative.)\
+	\'95 'on' --> f''(x) <= 0 over the entire domain of the spline.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which the second derivative is negative.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which the second derivative is negative.\
+\
+	DEFAULT VALUE:  'off'\
+\
+'leftvalue'	\'95 [] --> No explicit value provided for the value of the spline at its left hand end point.\
+	\'95 A numeric scalar --> the function will be assigned this value at its left hand end point (i.e., the first knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'rightvalue'	\'95 [] --> No explicit value provided for the value of the spline at its right hand end point.\
+	\'95 A numeric scalar --> the function will be assigned this value at its right hand end point (i.e., the last knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'leftminvalue'	\'95 [] --> No explicit value provided for the minimum value of the spline at its left hand end point.\
+	\'95 A numeric scalar --> the function will be constrained to not fall below this value at its left hand end point (i.e., the first knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'leftmaxvalue'	\'95 [] --> No explicit value provided for the maximum value of the spline at its left hand end point.\
+	\'95 A numeric scalar --> the function will be constrained to not exceed this value at its left hand end point (i.e., the first knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'leftminslope'	\'95 [] --> No explicit value provided for the minimum slope of the spline at its left hand end point.\
+	\'95 A numeric scalar --> the slope of the function will be constrained to not fall below this value at its left hand end point (i.e., the first knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'leftmaxslope'	\'95 [] --> No explicit value provided for the minimum slope of the spline at its left hand end point.\
+	\'95 A numeric scalar --> the slope of the function will be constrained to not exceed this value at its left hand end point (i.e., the first knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'rightminvalue'	\'95 [] --> No explicit value provided for the minimum value of the spline at its right hand end point.\
+	\'95 A numeric scalar --> the function will be constrained to not fall below this value at its right hand end point (i.e., the last knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'rightmaxvalue'	\'95 [] --> No explicit value provided for the maximum value of the spline at its right hand end point.\
+	\'95 A numeric scalar --> the function will be constrained to not exceed this value at its right hand end point (i.e., the last knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'rightminslope'	\'95 [] --> No explicit value provided for the minimum slope of the spline at its right hand end point.\
+	\'95 A numeric scalar --> the slope of the function will be constrained to not fall below this value at its right hand end point (i.e., the last knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'rightmaxslope'	\'95 [] --> No explicit value provided for the minimum slope of the spline at its right hand end point.\
+	\'95 A numeric scalar --> the slope of the function will be constrained to not exceed this value at its right hand end point (i.e., the last knot.)\
+\
+	DEFAULT VALUE:  []\
+\
+'minvalue'	\'95 [] --> No explicit value provided for the globally minimum value of the spline.\
+	\'95 A numeric scalar --> the function will pass below this minimum value.\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: This constraint is only a necessary constraint. It is not sufficient. In some circumstances the spline may pass slightly below this minimum value.\
+\
+'maxvalue'	\'95 [] --> No explicit value provided for the globally maximum value of the spline.\
+	\'95 A numeric scalar --> the function will pass above this maximum value.\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: This constraint is only a necessary constraint. It is not sufficient. In some circumstances the spline may pass slightly above this maximum value.\
+\
+'minslope'	\'95 [] --> No explicit value provided for the globally minimum slope of the spline.\
+	\'95 A numeric scalar --> the globally minimum slope of the spline\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: This is a sufficient constraint for the minimum slope of the spline. It is not a necessary constraint. There may exist another spline which has a slightly lower sum of squares and also has the same minimum slope.\
+\
+'maxslope'	\'95 [] --> No explicit value provided for the globally maximum slope of the spline.\
+	\'95 A numeric scalar --> the globally maximum slope of the spline\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: This is a sufficient constraint for the maximum slope of the spline. It is not a necessary constraint. There may exist another spline which has a slightly lower sum of squares and also has the same maximum slope.\
+\
+'constantregion'	\'95 [] --> No region of the spline is forced to be a constant function.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which it is a constant function.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which it is a constant function.\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: A segment which is forced to be constant over only part of a knot interval will also be constant over that entire interval.\
+\
+'linearregion'	\'95 [] --> No region of the spline is forced to be a purely linear function.\
+	\'95 vector of length 2 denoting the start and end points of a region of the spline over which it is a linear function.\
+	\'95 array of size nx2, each row of which denotes the start and end points of a region of the spline over which it is a linear function.\
+\
+	DEFAULT VALUE:  []\
+\
+	Comments: A segment which is forced to be purely linear over only part of a knot interval will also be linear over that entire interval.\
+\
+'weights'	\'95 [] --> all data points are assigned equal weight.\
+	\'95 vector of the same length as length(x), denotes relative weights for each data point.\
+\
+	DEFAULT VALUE:  []\
+\
+'scaling'	\'95 'on' --> data is shifted and scaled so as to minimize any numerical problems that may result in the solution.\
+	\'95 'off' --> No scaling is done.\
+\
+	DEFAULT VALUE:  'on'\
+\
+	Comments: No scaling will positively eliminate all problems. All scaling is undone in the final spline.\
+\
+'endconditions'	\'95 'natural' --> The "natural" spline conditions will be applied. I.e., f''(x) = 0 at end end of the spline.\
+	\'95 'notaknot' --> Not-a-knot end conditions applied.\
+	\'95 'periodic' --> Periodic end conditions applied.\
+	\'95 'estimate' --> end conditions are estimated from the data.\
+\
+	DEFAULT VALUE:  'estimate'\
+\
+'regularization'	\'95 [] --> Uses the default regularization parameter of 0.001.\
+	\'95 A POSITIVE scalar value --> defines the extent of smoothing.\
+	\'95 A NEGATIVE scalar value --> defines the RMSE target for the fit\
+	\
+	When a negative value is supplied, the absolute value is used as a target for the final RMSE of the fit.\
+	\
+	DEFAULT VALUE:  0.001\
+	\
+	Comments:  Smaller values will yield less smoothing, larger values more smoothing. In most cases this parameter should be left alone. It is used to prevent numerical singularities in the linear algebra, as well as help in the case of extrapolation and intrapolation. Smoothness of the resulting spline can be far better controlled by changing the number of knots and their placement. Specifically, the regularization parameter is a scale factor applied to the integral of the squared second derivative of the spline.\
+	\
+	Comments: It is possible that no value for the regularization parameter will yield the given rmse. In this case slmengine will come as close as possible to that goal.\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 \
+\
+\pard\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li2160\fi-2160\ri-720\qj
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ri-720\qj
+
+\b \cf0 Software requirements
+\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\fi360\ri-720\qj
+\cf0 These tools must have use of a constrained linear system solver such as LSQLIN from the optimization toolbox. If free knot splines are implemented, then a general constrained optimizer such as fmincon becomes necessary.\
+Since the output of these tools are splines, it would make sense to return a spline in a form consistent with the splines toolbox. This allows use of the spline evaluation tools currently in matlab. The SLM tools do offer that result as an option.\
+\
+\
+\
+\
+}
