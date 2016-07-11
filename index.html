@@ -32,26 +32,26 @@
 
         <section id="main_content">
           <h3>
-<a id="m3o-multi-objective-optimal-operations" class="anchor" href="#m3o-multi-objective-optimal-operations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>M3O: Multi-Objective Optimal Operations</h3>
+<a id="m3o-multi-objective-optimal-operations" class="anchor" href="#m3o-multi-objective-optimal-operations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>M3O-Multi-Objective-Optimal-Operations</h3>
 
 <p>M3O is a Matlab toolbox for designing the optimal operations of multipurpose water reservoir systems. M3O allows users to design Pareto optimal (or approximate) operating policies for managing water reservoir systems through several alternative state-of-the-art methods. Version 1.0 of M3O includes Deterministic and Stochastic Dynamic Programming, Implicit Stochastic Optimization, Sampling Stochastic Dynamic Programming, fitted Q-iteration, Evolutionary Multi-Objective Direct Policy Search, and Model Predictive Control. The toolbox is designed to be accessible to practitioners, researchers, and students, and to provide a fully commented and customizable code for more experienced users.</p>
 
 <h3>
 <a id="list-of-methods-available" class="anchor" href="#list-of-methods-available" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List of methods available</h3>
 
-<pre><code>* Deterministic Dynamic Programming (DDP) 
-* Stochastic Dynamic Programming (SDP) 
-* Implicit Stochastic Optimization (ISO) 
-* Sampling Stochastic Dynamic Programming (SSDP) 
-* Evolutionary Multi-Objective Direct Policy Search (EMODPS) 
-* Fitted Q-Iteration (FQI) 
-* Model Predictive Control (MPC) 
+<pre><code>- Deterministic Dynamic Programming (DDP);
+- Stochastic Dynamic Programming (SDP);
+- Implicit Stochastic Optimization (ISO);
+- Sampling Stochastic Dynamic Programming (SSDP);
+- Evolutionary Multi-Objective Direct Policy Search (EMODPS);
+- Fitted Q-Iteration (FQI);
+- Model Predictive Control (MPC);
 </code></pre>
 
 <h3>
-<a id="how-to-compile-filenamec-files-in-matlab" class="anchor" href="#how-to-compile-filenamec-files-in-matlab" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to compile <code>&lt;filename&gt;.c</code> files in MATLAB</h3>
+<a id="how-to-handle-filenamemex-files-in-matlab" class="anchor" href="#how-to-handle-filenamemex-files-in-matlab" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to handle <code>&lt;filename&gt;.mex</code> files in MATLAB</h3>
 
-<p>the <code>&lt;filename&gt;.c</code> are codes used to build <code>.mex</code> files, which are used to speed up the computation efficiency.</p>
+<p>M3O uses some <code>&lt;filename&gt;.mex</code> files built from the associated <code>&lt;filename&gt;.c</code> files (i.e., <code>nakeinterp1mx.c</code> and <code>rtenslearn_c.c</code>) which are used to speed up the computation efficiency.</p>
 
 <p>To build up the <code>.mex</code> files from <code>&lt;filename&gt;.c</code>, run <code>mex -v &lt;filename&gt;.c</code> in MATLAB. If MATLAB cannot find a valid compiler, then you may need to install one on your machine by following this <a href="http://it.mathworks.com/help/matlab/matlab_external/install-mingw-support-package.html">link</a>.</p>
 
@@ -59,8 +59,14 @@
 <a id="simlake-test-case-and-sys_param" class="anchor" href="#simlake-test-case-and-sys_param" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>Simlake</code> test case and <code>sys_param</code>
 </h3>
 
-<h2>
-<a id="the-m3o-toolbox-comes-with-a-test-case-using-synthesized-data-to-demonstrate-the-value-of-each-algorithms-to-run-the-test-case-simple-run-main_testm-in-matlab-a-global-structure-variable-sys_param-is-shared-by-the-inner-functions-of-the-toolbox-via-the-global-command-under-the-sys_param-there-are-two-subfields-namely-the-simulation-which-holds-generic-settings-for-running-the-dynamic-simulation-of-supplied-case-study-and-algorithm-which-holds-the-specific-algorithmic-settings-for-each-algorithm-for-more-details-see-the-help-file" class="anchor" href="#the-m3o-toolbox-comes-with-a-test-case-using-synthesized-data-to-demonstrate-the-value-of-each-algorithms-to-run-the-test-case-simple-run-main_testm-in-matlab-a-global-structure-variable-sys_param-is-shared-by-the-inner-functions-of-the-toolbox-via-the-global-command-under-the-sys_param-there-are-two-subfields-namely-the-simulation-which-holds-generic-settings-for-running-the-dynamic-simulation-of-supplied-case-study-and-algorithm-which-holds-the-specific-algorithmic-settings-for-each-algorithm-for-more-details-see-the-help-file" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The M3O toolbox comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run <code>main_test.m</code> in MATLAB. A global structure variable <code>sys_param</code> is shared by the inner functions of the toolbox via the <code>global</code> command. Under the <code>sys_param</code> there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and <code>.algorithm</code> which holds the specific algorithmic settings for each algorithm. For more details see the <a href="https://dl.dropboxusercontent.com/u/5877020/myWebsite/M3O_help/main_script_demo.html">HELP FILE</a>.</h2>
+<p>M3O comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run <code>main_test.m</code> in MATLAB. A global structure variable <code>sys_param</code> is shared by the inner functions of the toolbox via the <code>global</code> command. Under the <code>sys_param</code> there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and <code>.algorithm</code> which holds the specific algorithmic settings for each algorithm. For more details see the <a href="https://dl.dropboxusercontent.com/u/5877020/myWebsite/M3O_help/main_script_demo.html">HELP FILE</a>.</p>
+
+<h3>
+<a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Libraries</h3>
+
+<p>M3O relies on external code in the <code>lib</code> directory, including the "rtree-c" code by P. Geurts (<a href="http://www.montefiore.ulg.ac.be/%7Egeurts/Software.html">http://www.montefiore.ulg.ac.be/~geurts/Software.html</a>) for the implementation of the Extremely Randomized Trees (Extra-Trees), SLMtools by John D'Errico, and NSGAII implementation by Aravind Seshadri. </p>
+
+<hr>
 
 <h3>
 <a id="copyright" class="anchor" href="#copyright" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copyright:</h3>
