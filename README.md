@@ -19,7 +19,7 @@ To build up the `.mex` files from `<filename>.c`, run `mex -v <filename>.c` in M
 
 
 ### `Simlake` test case and `sys_param` 
-M3O comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run `main_test.m` in MATLAB. A global structure variable `sys_param` is shared by the inner functions of the toolbox via the `global` command. Under the `sys_param` there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and `.algorithm` which holds the specific algorithmic settings for each algorithm. For more details see the [HELP FILE] (https://dl.dropboxusercontent.com/u/5877020/myWebsite/M3O_help/main_script_demo.html).
+M3O comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run `main_test.m` in MATLAB. A global structure variable `sys_param` is shared by the inner functions of the toolbox via the `global` command. Under the `sys_param` there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and `.algorithm` which holds the specific algorithmic settings for each algorithm. For more details see the [HELP FILE] (http://www.nrm.deib.polimi.it/wp-content/uploads/2016/07/main_script_demo.html).
 
 ### Libraries
 M3O relies on external code in the `lib` directory, including the [rtree-c code](http://www.montefiore.ulg.ac.be/~geurts/Software.html) by P. Geurts for the implementation of the Extremely Randomized Trees (Extra-Trees), SLMtools by John D'Errico, and NSGAII implementation by Aravind Seshadri. 
