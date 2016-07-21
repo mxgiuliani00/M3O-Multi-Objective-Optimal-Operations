@@ -39,7 +39,7 @@ sys_param.simulation.delta = 60*60*24;
 
 %% --- Run DDP (Diterministic Dynamic Programming) ---
 clc
-addpath('./DP')
+addpath('./DDP')
 
 % Configure the parameters 
 load 'grids.mat';
@@ -184,7 +184,7 @@ xlabel('flooding'); ylabel('irrigation');
 
 %% --- Run ISO ( Implicit Stochastic Optimization) ---
 clc;
-addpath('./DP')
+addpath('./DDP')
 
 % Configure the parameters 
 load 'grids.mat';
