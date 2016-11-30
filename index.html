@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>M3o-multi-objective-optimal-operations by mxgiuliani00</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>M3o-multi-objective-optimal-operations</h1>
+          <h2>M3O is a Matlab toolbox for designing the optimal operations of multipurpose water reservoir systems</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/mxgiuliani00/M3O-Multi-Objective-Optimal-Operations/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/mxgiuliani00/M3O-Multi-Objective-Optimal-Operations/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/mxgiuliani00/M3O-Multi-Objective-Optimal-Operations" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h3>
+<a id="m3o-multi-objective-optimal-operations" class="anchor" href="#m3o-multi-objective-optimal-operations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>M3O-Multi-Objective-Optimal-Operations</h3>
+
+<p>M3O is a Matlab toolbox for designing the optimal operations of multipurpose water reservoir systems. M3O allows users to design Pareto optimal (or approximate) operating policies for managing water reservoir systems through several alternative state-of-the-art methods. Version 1.0 of M3O includes Deterministic and Stochastic Dynamic Programming, Implicit Stochastic Optimization, Sampling Stochastic Dynamic Programming, fitted Q-iteration, Evolutionary Multi-Objective Direct Policy Search, and Model Predictive Control. The toolbox is designed to be accessible to practitioners, researchers, and students, and to provide a fully commented and customizable code for more experienced users.</p>
+
+<h3>
+<a id="list-of-methods-available" class="anchor" href="#list-of-methods-available" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>List of methods available</h3>
+
+<pre><code>- Deterministic Dynamic Programming (DDP);
+- Stochastic Dynamic Programming (SDP);
+- Implicit Stochastic Optimization (ISO);
+- Sampling Stochastic Dynamic Programming (SSDP);
+- Evolutionary Multi-Objective Direct Policy Search (EMODPS);
+- Fitted Q-Iteration (FQI);
+- Model Predictive Control (MPC);
+</code></pre>
+
+<h3>
+<a id="how-to-handle-filenamemex-files-in-matlab" class="anchor" href="#how-to-handle-filenamemex-files-in-matlab" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to handle <code>&lt;filename&gt;.mex</code> files in MATLAB</h3>
+
+<p>M3O uses some <code>&lt;filename&gt;.mex</code> files built from the associated <code>&lt;filename&gt;.c</code> files (i.e., <code>nakeinterp1mx.c</code> and <code>rtenslearn_c.c</code>) which are used to speed up the computation efficiency.</p>
+
+<p>To build up the <code>.mex</code> files from <code>&lt;filename&gt;.c</code>, run <code>mex -v &lt;filename&gt;.c</code> in MATLAB. If MATLAB cannot find a valid compiler, then you may need to install one on your machine by following this <a href="http://it.mathworks.com/help/matlab/matlab_external/install-mingw-support-package.html">link</a>.</p>
+
+<h3>
+<a id="simlake-test-case-and-sys_param" class="anchor" href="#simlake-test-case-and-sys_param" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>Simlake</code> test case and <code>sys_param</code>
+</h3>
+
+<p>M3O comes with a test-case using synthesized data to demonstrate the value of each algorithms. To run the test case, simple run <code>main_test.m</code> in MATLAB. A global structure variable <code>sys_param</code> is shared by the inner functions of the toolbox via the <code>global</code> command. Under the <code>sys_param</code> there are two subfields, namely the '.simulation' which holds generic settings for running the dynamic simulation of supplied case study, and <code>.algorithm</code> which holds the specific algorithmic settings for each algorithm. For more details see the <a href="http://www.nrm.deib.polimi.it/wp-content/uploads/2016/07/main_script_demo.html">HELP FILE</a>.</p>
+
+<h3>
+<a id="libraries" class="anchor" href="#libraries" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Libraries</h3>
+
+<p>M3O relies on external code in the <code>lib</code> directory, including the <a href="http://www.montefiore.ulg.ac.be/%7Egeurts/Software.html">rtree-c code</a> by P. Geurts for the implementation of the Extremely Randomized Trees (Extra-Trees), SLMtools by John D'Errico, and NSGAII implementation by Aravind Seshadri. </p>
+
+<hr>
+
+<h3>
+<a id="copyright" class="anchor" href="#copyright" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Copyright:</h3>
+
+<p>Copyright 2016 NRM group - Politecnico di Milano</p>
+
+<p>Developers: Matteo Giuliani, Yu Li, Andrea Cominola, Simona Denaro, Emanuele Mason, Andrea Castelletti, Francesca Pianosi, Daniela Anghileri, Stefano Galelli.</p>
+
+<p>M3O is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+
+<p>The code is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along with M3O.  If not, see <a href="http://www.gnu.org/licenses/licenses.en.html">http://www.gnu.org/licenses/licenses.en.html</a>.</p>
+        </section>
+
+        <footer>
+          M3o-multi-objective-optimal-operations is maintained by <a href="https://github.com/mxgiuliani00">mxgiuliani00</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
