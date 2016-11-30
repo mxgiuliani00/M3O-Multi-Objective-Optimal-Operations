@@ -79,7 +79,7 @@ if strcmp(reg_param.name, 'ET')
   rtensparam                     = init_extra_trees();
   rtensparam.nbterms             = reg_param.M;
   rtensparam.rtparam.nmin        = reg_param.nmin;
-  rtensparam.rtparam.extratreesk = size(F,2); % Number of random cuts
+  rtensparam.rtparam.extratreesk = n_s + n_u; % Number of random cuts
   
   % RUN FQI with ET
   % initialization of Q = 0 for each state-action pair

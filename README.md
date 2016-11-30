@@ -29,6 +29,7 @@ M3O relies on external code in the `lib` directory, including the [rtree-c code]
 
 Copyright 2016 NRM group - Politecnico di Milano
 
+Developers: Matteo Giuliani, Yu Li, Andrea Cominola, Simona Denaro, Emanuele Mason, Andrea Castelletti, Francesca Pianosi, Daniela Anghileri, Stefano Galelli.
 
 M3O is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
