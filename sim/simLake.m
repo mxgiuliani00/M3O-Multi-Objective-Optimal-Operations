@@ -132,7 +132,7 @@ for t = 1: H
       policy_class = sys_param.algorithm.policy_class;
       
       if strcmp(policy_class, 'stdOP')
-        uu = std_operating_policy(h, policy);
+        uu = std_operating_policy(h(t), policy);
       else
         error(['Policy class not defined.',...
           ' Please check or modify this function to use a different',...
