@@ -59,7 +59,7 @@ s_next = s_curr + delta* ( q_curr - R );
 %==========================================================================
 % Compute immediate costs and aggregated one; TO BE ADAPTAED ACCORDING TO
 % YOUR OWN CASE STUDY
-[g1, g2] = immediate_costs( storageToLevel(s_curr).*ones(size(R)), R ) ;
+[g1, g2] = immediate_costs( storageToLevel(s_next), R ) ;
 G = (g1*weights(1) + g2*weights(2))';
 
 %-- Compute cost-to-go given by Bellman function --
