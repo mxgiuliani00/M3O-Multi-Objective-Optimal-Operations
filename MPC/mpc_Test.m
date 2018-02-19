@@ -100,7 +100,7 @@ x  = run(ms,problem);
       % compute release and mass balance equation
       v(t) = min_release(s(t));
       V(t) = max_release(s(t));
-      r(t+1) = x(1);
+      r(t+1) = x(t);
       s(t+1) = s(t) + delta * ( e_pred(t+1) - r(t+1) ) ;
     end
     
