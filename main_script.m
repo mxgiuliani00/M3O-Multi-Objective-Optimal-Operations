@@ -37,7 +37,7 @@ sys_param.simulation.delta = 60*60*24;
 
 [sys_param.simulation.vv, sys_param.simulation.VV] = deal(0); 
 
-%% --- Run DDP (Diterministic Dynamic Programming) ---
+%% --- Run DDP (Deterministic Dynamic Programming) ---
 clc
 addpath('./DDP')
 
