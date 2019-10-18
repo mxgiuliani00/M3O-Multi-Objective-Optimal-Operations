@@ -1,0 +1,8 @@
+title: M3o-multi-objective-optimal-operations
+description: M3O is a Matlab toolbox for designing the optimal operations of multipurpose water reservoir systems
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
