@@ -24,6 +24,9 @@ M3O comes with a test-case using synthesized data to demonstrate the value of ea
 ### Libraries
 M3O relies on external code in the `lib` directory, including the [rtree-c code](http://www.montefiore.ulg.ac.be/~geurts/Software.html) by P. Geurts for the implementation of the Extremely Randomized Trees (Extra-Trees), SLMtools by John D'Errico, and NSGAII implementation by Aravind Seshadri. 
 
+### References
+Giuliani, M., Y. Li, A. Cominola, S. Denaro, E. Mason, and A. Castelletti (2016), [A Matlab toolbox for designing Multi-Objective Optimal Operations of water reservoir systems](https://www.sciencedirect.com/science/article/pii/S1364815216305345), Environmental Modelling & Software, 85, 293–298
+
 ----
 ### Copyright:
 
